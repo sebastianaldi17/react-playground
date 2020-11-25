@@ -12,6 +12,15 @@ export default function Todo() {
         setValue('')
     }
 
+    const deleteTask = (index) => {
+        const tempTasks = tasks.filter((todo, todoIndex) => {
+            return todoIndex !== index
+        })
+        console.log(index)
+        console.log({tempTasks})
+        setTasks(tempTasks)
+    }
+
     const deleteTasks = () => {
         setTasks([])
     }
@@ -25,17 +34,21 @@ export default function Todo() {
         <div>
             <ul>
                 {tasks.filter(task => task.length > 0).map((task, index) => {
-                    return <li key={index}>{task}</li>
+                    return (
+                        <div key={`Div${index}`}>
+                            <li key={`Task${index}`}>{`Task ${task} Index ${index}`}</li>
+                            <button onClick={() => { deleteTask(index) }}>Remove task</button>
+                        </div>
+                    )
                 })}
-                <form onSubmit={handleSubmit}>
-                    <label>Add new task:</label>
-                    <input type="text" value={value} onChange={handleUpdate} />
-                    <input type="submit" value="Submit" />
-                </form> <br/>
-                <p>If anyone can tell me how to delete just a single tasks tell me</p>
-                <button onClick={deleteTasks}>Delete all tasks</button> <br/>
-                <a href='/home'>Go back to home</a>
             </ul>
+            <form onSubmit={handleSubmit}>
+                <label>Add new task:</label>
+                <input type="text" value={value} onChange={handleUpdate} />
+                <input type="submit" value="Submit" />
+            </form> <br />
+            <button onClick={deleteTasks}>Delete all tasks</button> <br />
+            <a href='/home'>Go back to home</a>
         </div>
     )
 }
